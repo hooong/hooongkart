@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block search %}
+
+    <div style="padding: 50px 100px 20px 100px">
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="라이더명을 입력해주세요!" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div style="padding: 0px 99px 0px 99px">
+        <div class="card">
+          <h5 class="card-header">최근 검색</h5>
+          <div class="card-body">
+              <h1>blah</h1>
+          </div>
+        </div>
+    </div>
+
+    {# TODO: 여기에 div 넣어놓고 hide인데 버튼 누르면 ajax로 비동기 통신한 후 보여주기 #}
+
+{% endblock %}
