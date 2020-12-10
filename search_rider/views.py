@@ -6,12 +6,15 @@ headers = {"Authorization": settings.API_KEY}
 
 
 def index(request):
-    print(get_access_id("SFll폭주M"))
-    return render(request, "home.html", {})
+    return render(request, "search.html", {})
 
 
-def search(request):
-    return
+def detail(request):
+    nickname = request.GET['nickname']
+    access_id = get_access_id(nickname)
+
+    context = {'nickname': nickname, 'access_id': access_id}
+    return render(request, "detail.html", context=context)
 
 
 def get_access_id(nickname):

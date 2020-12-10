@@ -21,5 +21,6 @@ import search_rider.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', search_rider.views.index)
+    path('', search_rider.views.index),
+    path('detail/', search_rider.views.detail, name='detail')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
