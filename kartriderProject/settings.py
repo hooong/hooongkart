@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import json
+import os
 from pathlib import Path
-import os, json
+
+with open("/Users/hooong/secret.json") as f:
+    secret = json.load(f)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'search_rider'
+    'search_rider',
+    'management_metadata'
 ]
 
 MIDDLEWARE = [
@@ -78,8 +83,12 @@ WSGI_APPLICATION = 'kartriderProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': secret["database"]["NAME"],
+        'USER': secret["database"]["USER"],
+        'PASSWORD': secret["database"]["PASSWORD"],
+        'HOST': secret["database"]["HOST"],
+        'PORT': '5432',
     }
 }
 
@@ -128,6 +137,4 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, '../templates/static')
 
 #API Key
-with open("/Users/hooong/key.json") as f:
-    keyfile = json.load(f)
-API_KEY = keyfile["key"]
+API_KEY = secret["api"]["key"]
