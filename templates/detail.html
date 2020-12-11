@@ -3,6 +3,21 @@
 {% block detail %}
     {{ nickname }}
     <br>
-    {{ access_id }}
+
+    {% for match in matches %}
+
+        {{ match.match_type }}
+        {{ match.player_count }}
+        {{ match.rank }}
+        {{ match.character }}
+        {{ match.kart }}
+        {{ match.track }}
+        {{ match.match_time }}
+        {{ match.before_time }}
+        <br>
+        <br>
+
+    {% endfor %}
+
 {% endblock %}
 
