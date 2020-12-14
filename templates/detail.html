@@ -2,32 +2,42 @@
 {% load static %}
 
 {% block detail %}
-    <br>
-    <figure class="figure">
-      <img src="{% static 'metadata/character/'|add:matches.0.character_img|add:'.png' %}" class="figure-img img-fluid rounded" alt="..." width="200px" height="150px">
-        <figcaption class="figure-caption"><h5 style="padding: 30px"><span class="badge bg-secondary">{{ nickname }}</span></h5></figcaption>
-    </figure>
 
-    {% for match in matches %}
-    <div class="accordion" id="accordionExample">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            {% if match.rank == '99' %}
-                <h5 class="card-title"># 리타이어</h5>
-            {% else %}
-                <h5 class="card-title"># {{ match.rank }} / {{ match.player_count }}</h5>
-            {% endif %}
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-          </div>
+    <div class="muck-up">
+      <div class="overlay" style="background: url('{% static 'img/bg.jpg' %}')"></div>
+      <div class="top">
+
+      </div>
+      <div class="clearfix"></div>
+      <div class="clearfix"></div>
+      <div class="bottom">
+        <div class="title">
+            <div class="user-profile">
+                <img src="{% static 'metadata/character/'|add:matches.0.character_img|add:'.png' %}" style="width: 60px; height: 50px">
+            </div>
+                <h3>{{ nickname }}</h3>
+            <small>최근 10경기에 대한 정보입니다.</small>
+{#          <h3>{{ nickname }}님의 전적</h3>#}
+{#          <small>최근 10경기에 대한 정보입니다.</small>#}
         </div>
+        <ul class="tasks">
+            {% for match in matches %}
+
+                {% if match.rank == '99' %}
+                    <li class="one red">
+                        <span class="task-title"># RETIRE</span>
+                {% else %}
+                    <li class="two green">
+                        <span class="task-title"># {{ match.rank }} / {{ match.player_count }}</span>
+                {% endif %}
+
+                    <span class="task-time">{{ match.before_time }}</span>
+                    <span class="task-cat">{{ match.match_type }} / {{ match.track }} / {{ match.match_time }}</span>
+                </li>
+            {% endfor %}
+        </ul>
       </div>
     </div>
-    {% endfor %}
 
 {% endblock %}
 
