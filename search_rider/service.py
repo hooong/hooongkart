@@ -10,14 +10,17 @@ headers = {"Authorization": settings.API_KEY}
 def get_access_id(nickname):
     res = requests.get(URL + "users/nickname/" + nickname, headers=headers)
     # res.encoding = 'utf-8'
-    res = res.json()
+    if not res.status_code == 200:
+        return False
 
+    res = res.json()
     return res["accessId"]
 
 
 def get_matches(access_id):
     res = requests.get(URL + "users/" + access_id + "/matches?start_date=&end_date=&offset=0&limit=10&match_types=",
                        headers=headers)
+
     res = res.json()
 
     tmp = []

@@ -14,7 +14,15 @@
             <input class="form-control me-2" type="text" name="nickname" placeholder="라이더명을 입력해주세요!" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
+        <br>
+        {% if not errer == '' %}
+        <div align="center">
+            <h3>{{ error }}</h3>
+        </div>
+        {% endif %}
     </div>
+
+
 
     <div style="padding: 0px 99px 0px 99px">
         <div class="card">
