@@ -16,7 +16,7 @@ def get_access_id(nickname):
 
 
 def get_matches(access_id):
-    res = requests.get(URL + "users/" + access_id + "/matches?start_date=&end_date=&offset=0&limit=30&match_types=",
+    res = requests.get(URL + "users/" + access_id + "/matches?start_date=&end_date=&offset=0&limit=10&match_types=",
                        headers=headers)
     res = res.json()
 
@@ -25,7 +25,7 @@ def get_matches(access_id):
         tmp += m["matches"]
 
     matches = []
-    tmp.sort(key=lambda x: x["startTime"])
+    tmp.sort(key=lambda x: x["startTime"], reverse=True)
     for m in tmp:
         match = dict()
         match['match_id'] = m['matchId']
