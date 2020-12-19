@@ -89,9 +89,10 @@ def match_time_calc(time):
 
 def before_time_calc(start_time):
     diff = str(datetime.now() - datetime.fromisoformat(start_time))
-    diff_tmp = str(datetime.now() - datetime.fromisoformat(start_time)).split()
+    diff_tmp = diff.split()
 
-    if not len(diff_tmp) > 2:
+    print(diff_tmp)
+    if len(diff_tmp) > 2:
         return diff_tmp[0] + '일전'
     else:
         diff = diff.split(':')
