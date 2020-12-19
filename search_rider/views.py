@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from search_rider.service import *
+from django.contrib import messages
 
 
 def index(request):
@@ -15,12 +16,12 @@ def index(request):
 def detail(request):
     nickname = request.GET['nickname']
     access_id = get_access_id(nickname)
+    recent_search = request.COOKIES.get('recent_search')
 
     if not access_id:
-        context = {'error': '존재하지 않는 닉네임입니다.'}
-        return render(request, "search.html", context=context)
+        messages.error(request, "존재하지 않는 닉네임입니다.")
+        return redirect('/')
     else:
-        recent_search = request.COOKIES.get('recent_search')
         if recent_search:
             recent_search = recent_search.split()
 
@@ -29,7 +30,6 @@ def detail(request):
             recent_search.append(access_id)
         else:
             recent_search = [access_id]
-        print(recent_search)
 
         matches = get_matches(access_id)
         context = {'nickname': nickname, 'matches': matches}

@@ -18,11 +18,9 @@ def get_access_id(nickname):
 
 
 def get_nickname(access_id):
-    print(access_id)
     res = requests.get(URL + "users/" + access_id, headers=headers)
     res.encoding = 'utf-8'
     res = res.json()
-    print(res)
 
     return res["name"]
 
