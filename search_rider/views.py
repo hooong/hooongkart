@@ -25,9 +25,13 @@ def detail(request):
         if recent_search:
             recent_search = recent_search.split()
 
-            if len(recent_search) == 5:
-                recent_search.pop(0)
-            recent_search.append(access_id)
+            if access_id in recent_search:
+                recent_search.remove(access_id)
+                recent_search.append(access_id)
+            else:
+                if len(recent_search) == 5:
+                    recent_search.pop(0)
+                recent_search.append(access_id)
         else:
             recent_search = [access_id]
 

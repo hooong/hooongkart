@@ -15,20 +15,15 @@
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <br>
-        {% if not errer == '' %}
-        <div align="center">
-            <h3>{{ error }}</h3>
-        </div>
-        {% endif %}
     </div>
-
-
 
     <div style="padding: 0px 99px 0px 99px">
         <div class="card">
           <h5 class="card-header">최근 검색</h5>
           <div class="card-body">
-              <h1>{{ recent_search }}</h1>
+              {% for name in recent_search %}
+                  <a href="detail/?nickname={{ name }}"><h3>{{ name }}</h3></a>
+              {% endfor %}
           </div>
         </div>
     </div>
