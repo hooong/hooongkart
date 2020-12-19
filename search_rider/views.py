@@ -1,9 +1,16 @@
 from django.shortcuts import render
 from search_rider.service import *
+import binascii
 
 
 def index(request):
-    return render(request, "search.html", {})
+    cookie = request.COOKIES.get('recent_search')
+
+    context = {'recent_search': ''}
+    if cookie:
+        context['recent_search'] = cookie
+
+    return render(request, "search.html", context=context)
 
 
 def detail(request):
@@ -15,8 +22,11 @@ def detail(request):
         return render(request, "search.html", context=context)
     else:
         matches = get_matches(access_id)
-
         context = {'nickname': nickname, 'matches': matches}
-        return render(request, "detail.html", context=context)
+
+        response = render(request, "detail.html", context=context)
+        response.set_cookie('recent_search', nickname.encode('utf-8'))
+
+        return response
 
 
