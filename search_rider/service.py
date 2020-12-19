@@ -17,6 +17,14 @@ def get_access_id(nickname):
     return res["accessId"]
 
 
+def get_nickname(access_id):
+    res = requests.get(URL + "users/" + access_id, headers=headers)
+    res.encoding = 'utf-8'
+    res = res.json()
+
+    return res["name"]
+
+
 def get_matches(access_id):
     res = requests.get(URL + "users/" + access_id + "/matches?start_date=&end_date=&offset=0&limit=10&match_types=",
                        headers=headers)

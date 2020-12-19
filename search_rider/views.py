@@ -4,11 +4,11 @@ import binascii
 
 
 def index(request):
-    cookie = request.COOKIES.get('recent_search')
+    recent_search = request.COOKIES.get('recent_search')
 
-    context = {'recent_search': ''}
-    if cookie:
-        context['recent_search'] = cookie
+    context = {'recent_search': []}
+    # for id in recent_search:
+    #
 
     return render(request, "search.html", context=context)
 
