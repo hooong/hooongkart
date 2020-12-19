@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from search_rider.service import *
-import binascii
 
 
 def index(request):
     recent_search = request.COOKIES.get('recent_search')
 
     context = {'recent_search': []}
-    # for id in recent_search:
-    #
+    for id in recent_search.split()[::-1]:
+        context['recent_search'].append(get_nickname(id))
 
     return render(request, "search.html", context=context)
 
