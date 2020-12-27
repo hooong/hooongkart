@@ -2,6 +2,7 @@ from management_metadata.models import *
 from django.conf import settings
 import requests
 from datetime import timedelta, datetime
+from django.core.cache import cache
 
 URL = "https://api.nexon.co.kr/kart/v1.0/"
 headers = {"Authorization": settings.API_KEY}
@@ -44,22 +45,23 @@ def get_matches(access_id):
         match['rank'] = m['player']['matchRank']
 
         try:
-            match['match_type'] = GameType.objects.get(gametype_id=m['matchType'])
+            print(cache.get('game_types'))
+            match['match_type'] = cache.get_or_set('game_types', GameType.objects.get(gametype_id=m['matchType']))
         except:
             match['match_type'] = '-'
 
         try:
-            match['character'] = Character.objects.get(character_id=m['character'])
+            match['character'] = cache.get_or_set('characters', Character.objects.get(character_id=m['character']))
         except:
             match['character'] = '-'
 
         try:
-            match['kart'] = Kart.objects.get(kart_id=m['player']['kart'])
+            match['kart'] = cache.get_or_set('karts', Kart.objects.get(kart_id=m['player']['kart']))
         except:
             match['kart'] = '-'
 
         try:
-            match['track'] = Track.objects.get(track_id=m['trackId'])
+            match['track'] = cache.get_or_set('tracks', Track.objects.get(track_id=m['trackId']))
         except:
             match['track'] = '-'
 

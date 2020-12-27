@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect
 from search_rider.service import *
 from django.contrib import messages
+import timeit
 
 
 def index(request):
     recent_search = request.COOKIES.get('recent_search')
 
     context = {'recent_search': []}
-    for id in recent_search.split()[::-1]:
-        context['recent_search'].append(get_nickname(id))
+
+    if recent_search:
+        for id in recent_search.split()[::-1]:
+            context['recent_search'].append(get_nickname(id))
 
     return render(request, "search.html", context=context)
 
@@ -35,8 +38,13 @@ def detail(request):
         else:
             recent_search = [access_id]
 
+        start_time = timeit.default_timer()
+
         matches = get_matches(access_id)
         context = {'nickname': nickname, 'matches': matches}
+
+        terminate_time = timeit.default_timer()
+        print("걸린 시간 : %f" % (terminate_time - start_time))
 
         response = render(request, "detail.html", context=context)
         response.set_cookie('recent_search', ' '.join(recent_search))
