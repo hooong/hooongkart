@@ -45,23 +45,22 @@ def get_matches(access_id):
         match['rank'] = m['player']['matchRank']
 
         try:
-            print(cache.get('game_types'))
-            match['match_type'] = cache.get_or_set('game_types', GameType.objects.get(gametype_id=m['matchType']))
+            match['match_type'] = cache.get_or_set('game_types:' + m['matchType'], GameType.objects.get(gametype_id=m['matchType']))
         except:
             match['match_type'] = '-'
 
         try:
-            match['character'] = cache.get_or_set('characters', Character.objects.get(character_id=m['character']))
+            match['character'] = cache.get_or_set('characters:' + m['character'], Character.objects.get(character_id=m['character']))
         except:
             match['character'] = '-'
 
         try:
-            match['kart'] = cache.get_or_set('karts', Kart.objects.get(kart_id=m['player']['kart']))
+            match['kart'] = cache.get_or_set('karts:' + m['player']['kart'], Kart.objects.get(kart_id=m['player']['kart']))
         except:
             match['kart'] = '-'
 
         try:
-            match['track'] = cache.get_or_set('tracks', Track.objects.get(track_id=m['trackId']))
+            match['track'] = cache.get_or_set('tracks:' + m['trackId'], Track.objects.get(track_id=m['trackId']))
         except:
             match['track'] = '-'
 
