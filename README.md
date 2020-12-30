@@ -2,7 +2,7 @@
 
 ----
 
-<img src="https://img.shields.io/badge/Python-3.8.2-blue"><img src="https://img.shields.io/badge/Django-3.1.4-green"><img src="https://img.shields.io/badge/PostgresQl-12.4-orange"><img src="https://img.shields.io/badge/Bootstrap-5.0.0-informational"><img src="https://img.shields.io/badge/Redis-6.0.9-orange">
+<img src="https://img.shields.io/badge/Python-3.8.2-blue">  <img src="https://img.shields.io/badge/Django-3.1.4-green">  <img src="https://img.shields.io/badge/PostgresQl-12.4-orange">  <img src="https://img.shields.io/badge/Bootstrap-5.0.0-informational">  <img src="https://img.shields.io/badge/Redis-6.0.9-orange">
 
 <br>
 
