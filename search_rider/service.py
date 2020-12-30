@@ -36,6 +36,21 @@ def get_matches(access_id):
     for m in res["matches"]:
         tmp += m["matches"]
 
+    # game_types = GameType.objects.all().values('gametype_id', 'name')
+    # characters = Character.objects.all().values('character_id', 'name')
+    # karts = Kart.objects.all().values('kart_id', 'name')
+    # tracks = Track.objects.all().values('track_id', 'name')
+
+    game_types = cache.get_or_set('gametypes', GameType.objects.all().values('gametype_id', 'name'))
+    characters = cache.get_or_set('characters', Character.objects.all().values('character_id', 'name'))
+    karts = cache.get_or_set('karts', Kart.objects.all().values('kart_id', 'name'))
+    tracks = cache.get_or_set('tracks', Track.objects.all().values('track_id', 'name'))
+
+    # print(len(list(game_types)))
+    # print(len(list(characters)))
+    # print(len(list(karts)))
+    # print(len(list(tracks)))
+
     matches = []
     tmp.sort(key=lambda x: x["startTime"], reverse=True)
     for m in tmp:
@@ -44,25 +59,56 @@ def get_matches(access_id):
         match['player_count'] = m['playerCount']
         match['rank'] = m['player']['matchRank']
 
-        try:
-            match['match_type'] = cache.get_or_set('game_types:' + m['matchType'], GameType.objects.get(gametype_id=m['matchType']))
-        except:
+        for game_type in game_types:
+            if game_type['gametype_id'] == m['matchType']:
+                match['match_type'] = game_type['name']
+                break
+        else:
             match['match_type'] = '-'
 
-        try:
-            match['character'] = cache.get_or_set('characters:' + m['character'], Character.objects.get(character_id=m['character']))
-        except:
+        for character in characters:
+            if character['character_id'] == m['character']:
+                match['character'] = character['name']
+                break
+        else:
             match['character'] = '-'
 
-        try:
-            match['kart'] = cache.get_or_set('karts:' + m['player']['kart'], Kart.objects.get(kart_id=m['player']['kart']))
-        except:
+        for kart in karts:
+            if kart['kart_id'] == m['player']['kart']:
+                match['kart'] = kart['name']
+                break
+        else:
             match['kart'] = '-'
 
-        try:
-            match['track'] = cache.get_or_set('tracks:' + m['trackId'], Track.objects.get(track_id=m['trackId']))
-        except:
+        for track in tracks:
+            if track['track_id'] == m['trackId']:
+                match['track'] = track['name']
+                break
+        else:
             match['track'] = '-'
+
+        # try:
+        #     match['match_type'] = GameType.objects.get(gametype_id=m['matchType']).name
+        # except:
+        #     match['match_type'] = '-'
+
+        # try:
+        #     match['character'] = Character.objects.get(character_id=m['character'])
+        #     # match['character'] = cache.get_or_set('characters:' + m['character'], Character.objects.get(character_id=m['character']).name)
+        # except:
+        #     match['character'] = '-'
+        #
+        # try:
+        #     match['kart'] = Kart.objects.get(kart_id=m['player']['kart'])
+        #     # match['kart'] = cache.get_or_set('karts:' + m['player']['kart'], Kart.objects.get(kart_id=m['player']['kart']).name)
+        # except:
+        #     match['kart'] = '-'
+        #
+        # try:
+        #     match['track'] = Track.objects.get(track_id=m['trackId'])
+        #     # match['track'] = cache.get_or_set('tracks:' + m['trackId'], Track.objects.get(track_id=m['trackId']).name)
+        # except:
+        #     match['track'] = '-'
 
         match['character_img'] = m['character']
         match['kart_img'] = m['player']['kart']
